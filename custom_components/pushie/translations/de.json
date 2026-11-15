@@ -1,0 +1,138 @@
+{
+  "title": "Pushie",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Mit Pushie verbinden",
+        "description": "Server-SEND_TOKEN verwenden. Die Prüfung sendet keine Nachricht.",
+        "data": {
+          "url": "HTTPS-URL",
+          "token": "API-Token"
+        }
+      },
+      "topics": {
+        "title": "Themen auswählen",
+        "data": {
+          "topics": "Themen"
+        }
+      },
+      "test_choice": {
+        "title": "Optionaler echter Test",
+        "menu_options": {
+          "test": "Testnachricht senden",
+          "finish": "Überspringen / fertig"
+        }
+      },
+      "test": {
+        "title": "Echte Testnachricht senden",
+        "description": "Beim Absenden werden alle Abonnenten des gewählten Themas benachrichtigt.",
+        "data": {
+          "topic": "Thema",
+          "title": "Titel",
+          "message": "Nachricht"
+        }
+      },
+      "result": {
+        "title": "Ergebnis",
+        "description": "{result}"
+      },
+      "init": {
+        "title": "Pushie konfigurieren",
+        "menu_options": {
+          "topics": "Themen auswählen",
+          "refresh": "Themen aktualisieren",
+          "verify": "Verbindung prüfen (ohne Versand)",
+          "test": "Testnachricht senden"
+        }
+      },
+      "verify": {
+        "title": "Verbindung prüfen"
+      }
+    },
+    "error": {
+      "invalid_url": "HTTPS-Adresse ohne Zugangsdaten, Pfad, Abfrage oder Fragment eingeben.",
+      "invalid_auth": "Ungültiges Token. Pushie SEND_TOKEN verwenden.",
+      "no_permission": "Dieses Token darf nicht auf Themen zugreifen.",
+      "cannot_connect": "Verbindung zu Pushie fehlgeschlagen.",
+      "unsupported_api": "Pushie aktualisieren: Themen-API Version 1 erforderlich.",
+      "not_found": "Das Thema existiert nicht mehr.",
+      "too_large": "Die Nachricht überschreitet die Größenbegrenzung.",
+      "conflict": "Idempotenzkonflikt.",
+      "rate_limited": "Zu viele Anfragen. Später erneut versuchen.",
+      "server_error": "Pushie hat einen Fehler zurückgegeben.",
+      "invalid_message": "Eine nicht leere Nachricht (maximal 2000 UTF-8-Bytes) und einen Titel (maximal 160 Bytes) eingeben.",
+      "select_topics": "Mindestens ein Thema auswählen.",
+      "no_topics": "Keine Themen gefunden. In Pushie Themen erstellen und erneut versuchen."
+    },
+    "abort": {
+      "already_configured": "Diese Pushie-Installation ist bereits eingerichtet.",
+      "reauth_successful": "Zugangsdaten aktualisiert.",
+      "reconfigure_successful": "Verbindung aktualisiert."
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "title": "Mit Pushie verbinden",
+        "description": "Server-SEND_TOKEN verwenden. Die Prüfung sendet keine Nachricht.",
+        "data": {
+          "url": "HTTPS-URL",
+          "token": "API-Token"
+        }
+      },
+      "topics": {
+        "title": "Themen auswählen",
+        "data": {
+          "topics": "Themen"
+        }
+      },
+      "test_choice": {
+        "title": "Optionaler echter Test",
+        "menu_options": {
+          "test": "Testnachricht senden",
+          "finish": "Überspringen / fertig"
+        }
+      },
+      "test": {
+        "title": "Echte Testnachricht senden",
+        "description": "Beim Absenden werden alle Abonnenten des gewählten Themas benachrichtigt.",
+        "data": {
+          "topic": "Thema",
+          "title": "Titel",
+          "message": "Nachricht"
+        }
+      },
+      "result": {
+        "title": "Ergebnis",
+        "description": "{result}"
+      },
+      "init": {
+        "title": "Pushie konfigurieren",
+        "menu_options": {
+          "topics": "Themen auswählen",
+          "refresh": "Themen aktualisieren",
+          "verify": "Verbindung prüfen (ohne Versand)",
+          "test": "Testnachricht senden"
+        }
+      },
+      "verify": {
+        "title": "Verbindung prüfen"
+      }
+    },
+    "error": {
+      "invalid_url": "HTTPS-Adresse ohne Zugangsdaten, Pfad, Abfrage oder Fragment eingeben.",
+      "invalid_auth": "Ungültiges Token. Pushie SEND_TOKEN verwenden.",
+      "no_permission": "Dieses Token darf nicht auf Themen zugreifen.",
+      "cannot_connect": "Verbindung zu Pushie fehlgeschlagen.",
+      "unsupported_api": "Pushie aktualisieren: Themen-API Version 1 erforderlich.",
+      "not_found": "Das Thema existiert nicht mehr.",
+      "too_large": "Die Nachricht überschreitet die Größenbegrenzung.",
+      "conflict": "Idempotenzkonflikt.",
+      "rate_limited": "Zu viele Anfragen. Später erneut versuchen.",
+      "server_error": "Pushie hat einen Fehler zurückgegeben.",
+      "invalid_message": "Eine nicht leere Nachricht (maximal 2000 UTF-8-Bytes) und einen Titel (maximal 160 Bytes) eingeben.",
+      "select_topics": "Mindestens ein Thema auswählen.",
+      "no_topics": "Keine Themen gefunden. In Pushie Themen erstellen und erneut versuchen."
+    }
+  }
+}

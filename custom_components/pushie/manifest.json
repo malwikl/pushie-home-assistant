@@ -1,0 +1,13 @@
+{
+  "domain": "pushie",
+  "name": "Pushie",
+  "version": "0.1.0",
+  "codeowners": [
+    "@malwikl"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/malwikl/pushie-home-assistant",
+  "iot_class": "cloud_polling",
+  "integration_type": "service",
+  "requirements": []
+}

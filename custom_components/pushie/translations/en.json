@@ -1,0 +1,138 @@
+{
+  "title": "Pushie",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Pushie",
+        "description": "Use the server SEND_TOKEN. Verification does not send a notification.",
+        "data": {
+          "url": "HTTPS URL",
+          "token": "API token"
+        }
+      },
+      "topics": {
+        "title": "Choose topics",
+        "data": {
+          "topics": "Topics"
+        }
+      },
+      "test_choice": {
+        "title": "Optional real test",
+        "menu_options": {
+          "test": "Send test notification",
+          "finish": "Skip / finish"
+        }
+      },
+      "test": {
+        "title": "Send real test notification",
+        "description": "Submitting sends to all subscribers of the selected topic. Zero inboxes means no subscribers; inboxes with zero queued devices means inbox-only delivery.",
+        "data": {
+          "topic": "Topic",
+          "title": "Title",
+          "message": "Message"
+        }
+      },
+      "result": {
+        "title": "Result",
+        "description": "{result}"
+      },
+      "init": {
+        "title": "Configure Pushie",
+        "menu_options": {
+          "topics": "Choose topics",
+          "refresh": "Refresh topics",
+          "verify": "Verify connection (no send)",
+          "test": "Send test notification"
+        }
+      },
+      "verify": {
+        "title": "Verify connection"
+      }
+    },
+    "error": {
+      "invalid_url": "Enter an HTTPS origin without credentials, path, query or fragment.",
+      "invalid_auth": "Invalid token. Use the Pushie SEND_TOKEN.",
+      "no_permission": "This token cannot access topics.",
+      "cannot_connect": "Cannot connect to Pushie.",
+      "unsupported_api": "Update Pushie: topic API version 1 is required.",
+      "not_found": "The topic no longer exists.",
+      "too_large": "The notification exceeds the server size limit.",
+      "conflict": "Idempotency conflict.",
+      "rate_limited": "Rate limited. Try again later.",
+      "server_error": "Pushie returned an error.",
+      "invalid_message": "Enter a nonblank message (at most 2000 UTF-8 bytes) and title (at most 160 bytes).",
+      "select_topics": "Select at least one topic.",
+      "no_topics": "No topics found. Create topics in Pushie, then retry."
+    },
+    "abort": {
+      "already_configured": "This Pushie installation is already configured.",
+      "reauth_successful": "Credentials updated.",
+      "reconfigure_successful": "Connection updated."
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "title": "Connect to Pushie",
+        "description": "Use the server SEND_TOKEN. Verification does not send a notification.",
+        "data": {
+          "url": "HTTPS URL",
+          "token": "API token"
+        }
+      },
+      "topics": {
+        "title": "Choose topics",
+        "data": {
+          "topics": "Topics"
+        }
+      },
+      "test_choice": {
+        "title": "Optional real test",
+        "menu_options": {
+          "test": "Send test notification",
+          "finish": "Skip / finish"
+        }
+      },
+      "test": {
+        "title": "Send real test notification",
+        "description": "Submitting sends to all subscribers of the selected topic. Zero inboxes means no subscribers; inboxes with zero queued devices means inbox-only delivery.",
+        "data": {
+          "topic": "Topic",
+          "title": "Title",
+          "message": "Message"
+        }
+      },
+      "result": {
+        "title": "Result",
+        "description": "{result}"
+      },
+      "init": {
+        "title": "Configure Pushie",
+        "menu_options": {
+          "topics": "Choose topics",
+          "refresh": "Refresh topics",
+          "verify": "Verify connection (no send)",
+          "test": "Send test notification"
+        }
+      },
+      "verify": {
+        "title": "Verify connection"
+      }
+    },
+    "error": {
+      "invalid_url": "Enter an HTTPS origin without credentials, path, query or fragment.",
+      "invalid_auth": "Invalid token. Use the Pushie SEND_TOKEN.",
+      "no_permission": "This token cannot access topics.",
+      "cannot_connect": "Cannot connect to Pushie.",
+      "unsupported_api": "Update Pushie: topic API version 1 is required.",
+      "not_found": "The topic no longer exists.",
+      "too_large": "The notification exceeds the server size limit.",
+      "conflict": "Idempotency conflict.",
+      "rate_limited": "Rate limited. Try again later.",
+      "server_error": "Pushie returned an error.",
+      "invalid_message": "Enter a nonblank message (at most 2000 UTF-8 bytes) and title (at most 160 bytes).",
+      "select_topics": "Select at least one topic.",
+      "no_topics": "No topics found. Create topics in Pushie, then retry."
+    }
+  }
+}
