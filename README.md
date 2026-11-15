@@ -2,7 +2,7 @@
 
 A UI-configured, topic-only notification integration for [Pushie](https://github.com/malwikl/pushie).
 
-Copy `custom_components/pushie` into Home Assistant's `config/custom_components/` directory and restart Home Assistant. Add **Pushie** under Settings → Devices & services. Enter the server's HTTPS origin and `SEND_TOKEN`, choose topics, then send an optional real test or skip it. The server must include `GET /api/topics` and `POST /api/verify` (API version 1). Older Pushie versions must be updated first. No administrator token is needed. Personal and Watchtower keys cannot send to topics. The server-wide token has broader permissions than the topic-only UI exposes.
+Copy `custom_components/pushie` into Home Assistant's `config/custom_components/` directory and restart Home Assistant. Add **Pushie** under Settings → Devices & services. Enter the server's HTTPS origin and an **All sending** integration token, choose topics, then send an optional real test or skip it. The server must include `GET /api/topics` and `POST /api/verify` (API version 1). Older Pushie versions must be updated first. Create a key under Pushie → Administration → Integration keys with permission **All sending (Home Assistant)**. The server `SEND_TOKEN` also works. No administrator token is needed. Personal keys and Watchtower-only keys cannot pass topic verification. All sending keys may send to any destination through the API; the HA integration exposes topics only.
 
 Use a selected topic in the visual automation editor with **Notifications: Send a notification message**, or YAML:
 

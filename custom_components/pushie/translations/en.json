@@ -4,7 +4,7 @@
     "step": {
       "user": {
         "title": "Connect to Pushie",
-        "description": "Use the server SEND_TOKEN. Verification does not send a notification.",
+        "description": "Use an All sending integration token (or SEND_TOKEN). Verification does not send a notification.",
         "data": {
           "url": "HTTPS URL",
           "token": "API token"
@@ -51,7 +51,7 @@
     },
     "error": {
       "invalid_url": "Enter an HTTPS origin without credentials, path, query or fragment.",
-      "invalid_auth": "Invalid token. Use the Pushie SEND_TOKEN.",
+      "invalid_auth": "Invalid token. Use an All sending integration token (or SEND_TOKEN).",
       "no_permission": "This token cannot access topics.",
       "cannot_connect": "Cannot connect to Pushie.",
       "unsupported_api": "Update Pushie: topic API version 1 is required.",
@@ -74,7 +74,7 @@
     "step": {
       "user": {
         "title": "Connect to Pushie",
-        "description": "Use the server SEND_TOKEN. Verification does not send a notification.",
+        "description": "Use an All sending integration token (or SEND_TOKEN). Verification does not send a notification.",
         "data": {
           "url": "HTTPS URL",
           "token": "API token"
@@ -121,7 +121,7 @@
     },
     "error": {
       "invalid_url": "Enter an HTTPS origin without credentials, path, query or fragment.",
-      "invalid_auth": "Invalid token. Use the Pushie SEND_TOKEN.",
+      "invalid_auth": "Invalid token. Use an All sending integration token (or SEND_TOKEN).",
       "no_permission": "This token cannot access topics.",
       "cannot_connect": "Cannot connect to Pushie.",
       "unsupported_api": "Update Pushie: topic API version 1 is required.",

@@ -4,7 +4,7 @@
     "step": {
       "user": {
         "title": "Mit Pushie verbinden",
-        "description": "Server-SEND_TOKEN verwenden. Die Prüfung sendet keine Nachricht.",
+        "description": "Integrationsschlüssel mit allen Senderechten (oder SEND_TOKEN) verwenden. Die Prüfung sendet keine Nachricht.",
         "data": {
           "url": "HTTPS-URL",
           "token": "API-Token"
@@ -51,7 +51,7 @@
     },
     "error": {
       "invalid_url": "HTTPS-Adresse ohne Zugangsdaten, Pfad, Abfrage oder Fragment eingeben.",
-      "invalid_auth": "Ungültiges Token. Pushie SEND_TOKEN verwenden.",
+      "invalid_auth": "Ungültiges Token. Integrationsschlüssel mit allen Senderechten (oder SEND_TOKEN) verwenden.",
       "no_permission": "Dieses Token darf nicht auf Themen zugreifen.",
       "cannot_connect": "Verbindung zu Pushie fehlgeschlagen.",
       "unsupported_api": "Pushie aktualisieren: Themen-API Version 1 erforderlich.",
@@ -74,7 +74,7 @@
     "step": {
       "user": {
         "title": "Mit Pushie verbinden",
-        "description": "Server-SEND_TOKEN verwenden. Die Prüfung sendet keine Nachricht.",
+        "description": "Integrationsschlüssel mit allen Senderechten (oder SEND_TOKEN) verwenden. Die Prüfung sendet keine Nachricht.",
         "data": {
           "url": "HTTPS-URL",
           "token": "API-Token"
@@ -121,7 +121,7 @@
     },
     "error": {
       "invalid_url": "HTTPS-Adresse ohne Zugangsdaten, Pfad, Abfrage oder Fragment eingeben.",
-      "invalid_auth": "Ungültiges Token. Pushie SEND_TOKEN verwenden.",
+      "invalid_auth": "Ungültiges Token. Integrationsschlüssel mit allen Senderechten (oder SEND_TOKEN) verwenden.",
       "no_permission": "Dieses Token darf nicht auf Themen zugreifen.",
       "cannot_connect": "Verbindung zu Pushie fehlgeschlagen.",
       "unsupported_api": "Pushie aktualisieren: Themen-API Version 1 erforderlich.",
