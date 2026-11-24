@@ -1,5 +1,7 @@
 # Pushie for Home Assistant
 
+[![Latest release](https://img.shields.io/github/v/release/malwikl/pushie-home-assistant?label=version)](https://github.com/malwikl/pushie-home-assistant/releases/latest)
+
 A custom Home Assistant integration that sends [Pushie](https://github.com/malwikl/pushie) notifications from automations and scripts. Each selected Pushie topic becomes a Home Assistant `notify` entity.
 
 ## Install
@@ -18,7 +20,7 @@ Install updates from **Settings → Updates**, then restart Home Assistant to ap
 
 ### Manual installation
 
-1. [Download the ZIP](https://github.com/malwikl/pushie-home-assistant/archive/refs/heads/main.zip) and extract it.
+1. Open the [latest release](https://github.com/malwikl/pushie-home-assistant/releases/latest), download **Source code (zip)**, and extract it.
 2. Copy the `custom_components/pushie` folder into your Home Assistant configuration directory. The manifest should end up at `config/custom_components/pushie/manifest.json`. Create `custom_components` if needed. [Find your Home Assistant configuration directory](https://www.home-assistant.io/docs/configuration/).
 3. Restart Home Assistant and [set up Pushie](#set-up-pushie).
 
