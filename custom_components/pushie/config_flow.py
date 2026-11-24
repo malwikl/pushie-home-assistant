@@ -56,14 +56,14 @@ class FlowMixin:
         defaults = user_input or {
             "topic": self.selected[0],
             "title": "Home Assistant",
-            "message": "Pushie test notification",
+            "notification": "Pushie test notification",
         }
         if user_input is not None:
             try:
                 if user_input["topic"] not in self.selected:
                     raise PushieError("select_topics")
                 result = await self.client().send(
-                    user_input["topic"], user_input["message"], user_input["title"]
+                    user_input["topic"], user_input["notification"], user_input["title"]
                 )
                 self.feedback = f"Stored in {result.get('inboxUsers', 0)} inboxes; queued for {result.get('queued', 0)} devices. Receipt is unconfirmed."
                 return await self.async_step_result()
@@ -78,9 +78,9 @@ class FlowMixin:
                         selector.SelectSelectorConfig(options=self.selected)
                     ),
                     vol.Required("title", default=defaults["title"]): str,
-                    vol.Required("message", default=defaults["message"]): selector.TextSelector(
-                        selector.TextSelectorConfig(multiline=True)
-                    ),
+                    vol.Required(
+                        "notification", default=defaults["notification"]
+                    ): selector.TextSelector(selector.TextSelectorConfig(multiline=True)),
                 }
             ),
         )

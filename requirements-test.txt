@@ -1,0 +1,4 @@
+# Home Assistant and its official fixtures are released as a matching pair.
+pytest-homeassistant==2026.11.1
+pytest-cov==7.0.0
+ruff==0.14.5

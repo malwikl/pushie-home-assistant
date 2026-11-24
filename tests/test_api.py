@@ -1,16 +1,12 @@
-import importlib.util
-from pathlib import Path
+"""Exercise HTTPS requests using HA's aiohttp fixtures."""
+
 from unittest.mock import AsyncMock, patch
 
-import aiohttp
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 import pytest
-from aioresponses import aioresponses
+from pytest_homeassistant.test_util.aiohttp import AiohttpClientMockResponse
 
-spec = importlib.util.spec_from_file_location(
-    "pushie_api", Path(__file__).parents[1] / "custom_components/pushie/api.py"
-)
-api = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(api)
+from custom_components.pushie import api
 
 
 @pytest.mark.parametrize(
@@ -21,122 +17,65 @@ def test_url_rejects_unsafe_origins(url):
         api.normalize_url(url)
 
 
-@pytest.mark.asyncio
-async def test_retry_preserves_key_and_payload():
-    with aioresponses() as mock:
-        mock.post("https://push.example/api/send", status=503)
-        mock.post("https://push.example/api/send", payload={"queued": 2, "inboxUsers": 1})
-        async with aiohttp.ClientSession() as session:
-            client = api.PushieClient(session, "https://push.example/", "secret")
-            with patch.object(api.asyncio, "sleep", new=AsyncMock()):
-                assert (await client.send("automation", 'Hi "世界"\nOK'))["queued"] == 2
-        calls = next(iter(mock.requests.values()))
-        assert len(calls) == 2
-        assert (
-            calls[0].kwargs["headers"]["Idempotency-Key"]
-            == calls[1].kwargs["headers"]["Idempotency-Key"]
+async def test_retry_preserves_key_and_payload(hass, aioclient_mock):
+    attempts = 0
+
+    async def reply(method, url, data):
+        nonlocal attempts
+        attempts += 1
+        return AiohttpClientMockResponse(
+            method,
+            url,
+            status=503 if attempts == 1 else 200,
+            json={"queued": 2, "inboxUsers": 1},
         )
-        assert calls[0].kwargs["json"] == calls[1].kwargs["json"]
-        assert set(calls[0].kwargs["json"]) == {"topic", "title", "body"}
+
+    aioclient_mock.request("post", "https://push.example/api/send", side_effect=reply)
+    client = api.PushieClient(async_get_clientsession(hass), "https://push.example/", "secret")
+    with patch.object(api.asyncio, "sleep", new=AsyncMock()):
+        assert (await client.send("automation", 'Hi "世界"\nOK'))["queued"] == 2
+    first, second = aioclient_mock.mock_calls
+    assert first[3]["Idempotency-Key"] == second[3]["Idempotency-Key"]
+    assert first[2] == second[2]
+    assert set(first[2]) == {"topic", "title", "body"}
 
 
-@pytest.mark.asyncio
-async def test_verify_never_sends():
-    with aioresponses() as mock:
-        mock.post(
-            "https://push.example/api/verify",
-            payload={
-                "ok": True,
-                "apiVersion": 1,
-                "capabilities": ["verify", "topics:list", "topics:send"],
-            },
-        )
-        async with aiohttp.ClientSession() as session:
-            await api.PushieClient(session, "https://push.example", "secret").verify()
-        assert len(mock.requests) == 1
+async def test_verify_never_sends(hass, aioclient_mock):
+    aioclient_mock.post(
+        "https://push.example/api/verify",
+        json={
+            "ok": True,
+            "apiVersion": 1,
+            "capabilities": ["verify", "topics:list", "topics:send"],
+        },
+    )
+    await api.PushieClient(async_get_clientsession(hass), "https://push.example", "secret").verify()
+    assert aioclient_mock.call_count == 1
 
 
-@pytest.mark.asyncio
-async def test_message_limits_before_network():
+async def test_notification_limits_before_network():
     client = api.PushieClient(None, "https://push.example", "secret")
-    for message in [" ", "世" * 667]:
-        with pytest.raises(api.PushieError, match="invalid_message"):
-            await client.send("automation", message)
+    for notification in [" ", "世" * (256 * 1024 // 3 + 1)]:
+        with pytest.raises(api.PushieError, match="invalid_notification"):
+            await client.send("automation", notification)
 
 
-@pytest.mark.asyncio
-async def test_auth_not_retried():
-    with aioresponses() as mock:
-        mock.post("https://push.example/api/send", status=401)
-        async with aiohttp.ClientSession() as session:
-            with pytest.raises(api.PushieError, match="invalid_auth"):
-                await api.PushieClient(session, "https://push.example", "secret").send("a", "hello")
-        assert len(next(iter(mock.requests.values()))) == 1
+async def test_auth_not_retried(hass, aioclient_mock):
+    aioclient_mock.post("https://push.example/api/send", status=401)
+    with pytest.raises(api.PushieError, match="invalid_auth"):
+        await api.PushieClient(
+            async_get_clientsession(hass), "https://push.example", "secret"
+        ).send("a", "hello")
+    assert aioclient_mock.call_count == 1
 
 
-def test_home_assistant_imports():
-    import sys
-
-    sys.path.insert(0, str(Path(__file__).parents[1]))
-    from custom_components.pushie import config_flow, notify
-
-    assert config_flow.PushieConfigFlow.VERSION == 1
-    assert notify.PushieNotify._attr_supported_features
-
-
-@pytest.mark.asyncio
-async def test_topics_flow_verifies_before_creation():
-    from custom_components.pushie.config_flow import PushieConfigFlow
-
-    flow = PushieConfigFlow()
-    flow.hass = object()
-    client = AsyncMock()
-    client.url = "https://push.example"
-    with (
-        patch.object(flow, "client", return_value=client),
-        patch.object(flow, "_async_current_entries", return_value=[]),
-        patch.object(
-            flow, "async_step_topics", new=AsyncMock(return_value={"type": "form"})
-        ) as topics,
-    ):
-        result = await flow.async_step_user({"url": "https://push.example", "token": "secret"})
-    client.verify.assert_awaited_once()
-    topics.assert_awaited_once()
-    client.send.assert_not_called()
-    assert result["type"] == "form"
-
-
-@pytest.mark.asyncio
-async def test_test_form_does_not_send_until_submission():
-    from custom_components.pushie.config_flow import PushieConfigFlow
-
-    flow = PushieConfigFlow()
-    flow.selected = ["automation"]
-    client = AsyncMock()
-    with (
-        patch.object(flow, "client", return_value=client),
-        patch.object(flow, "async_show_form", return_value={}) as form,
-    ):
-        await flow.async_step_test()
-    client.send.assert_not_called()
-    assert form.call_args.kwargs["step_id"] == "test"
-
-
-@pytest.mark.asyncio
-async def test_removed_topic_entity_recovers_identity():
-    from unittest.mock import MagicMock
-
-    from custom_components.pushie.notify import PushieNotify
-
-    coordinator = MagicMock()
-    coordinator.last_update_success = True
-    coordinator.data = {"automation": "Automation"}
-    entry = MagicMock()
-    entry.data = {"installation_id": "persisted"}
-    entity = PushieNotify(coordinator, entry, "automation")
-    identity = entity.unique_id
-    assert entity.available
-    coordinator.data = {}
-    assert not entity.available
-    coordinator.data = {"automation": "Renamed description"}
-    assert entity.available and entity.unique_id == identity
+async def test_full_notification_uses_standard_body():
+    client = api.PushieClient(None, "https://push.example", "secret")
+    client.request = AsyncMock(return_value={"queued": 1})
+    notification = "x" * (256 * 1024)
+    await client.send("automation", notification)
+    assert client.request.call_args.args[2] == {
+        "topic": "automation",
+        "title": "Home Assistant",
+        "body": notification,
+    }

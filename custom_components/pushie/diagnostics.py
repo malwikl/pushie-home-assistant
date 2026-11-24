@@ -1,4 +1,4 @@
-"""No credentials, URLs, recipients or message text in diagnostics."""
+"""No credentials, URLs, recipients or notification text in diagnostics."""
 
 
 async def async_get_config_entry_diagnostics(hass, entry):

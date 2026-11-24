@@ -1,0 +1,10 @@
+FROM python:3.14.2-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_DISABLE_PIP_VERSION_CHECK=1
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential libffi-dev libssl-dev && rm -rf /var/lib/apt/lists/*
+WORKDIR /work
+COPY requirements-test.txt /tmp/requirements-test.txt
+RUN python -m pip install --no-cache-dir -r /tmp/requirements-test.txt
+COPY pyproject.toml ./
+COPY custom_components ./custom_components
+COPY tests ./tests
+CMD ["python", "-m", "pytest", "--cov=custom_components.pushie", "--cov-report=term-missing"]

@@ -4,7 +4,7 @@
     "step": {
       "user": {
         "title": "Connect to Pushie",
-        "description": "Use an All sending integration token (or SEND_TOKEN). Verification does not send a notification.",
+        "description": "Use an integration token (or SEND_TOKEN). Verification does not send a notification.",
         "data": {
           "url": "HTTPS URL",
           "token": "API token"
@@ -29,7 +29,7 @@
         "data": {
           "topic": "Topic",
           "title": "Title",
-          "message": "Message"
+          "notification": "Notification"
         }
       },
       "result": {
@@ -51,7 +51,7 @@
     },
     "error": {
       "invalid_url": "Enter an HTTPS origin without credentials, path, query or fragment.",
-      "invalid_auth": "Invalid token. Use an All sending integration token (or SEND_TOKEN).",
+      "invalid_auth": "Invalid token. Use an integration token (or SEND_TOKEN).",
       "no_permission": "This token cannot access topics.",
       "cannot_connect": "Cannot connect to Pushie.",
       "unsupported_api": "Update Pushie: topic API version 1 is required.",
@@ -60,7 +60,7 @@
       "conflict": "Idempotency conflict.",
       "rate_limited": "Rate limited. Try again later.",
       "server_error": "Pushie returned an error.",
-      "invalid_message": "Enter a nonblank message (at most 2000 UTF-8 bytes) and title (at most 160 bytes).",
+      "invalid_notification": "Enter a nonblank notification (at most 262144 UTF-8 bytes) and title (at most 160 bytes).",
       "select_topics": "Select at least one topic.",
       "no_topics": "No topics found. Create topics in Pushie, then retry."
     },
@@ -74,7 +74,7 @@
     "step": {
       "user": {
         "title": "Connect to Pushie",
-        "description": "Use an All sending integration token (or SEND_TOKEN). Verification does not send a notification.",
+        "description": "Use an integration token (or SEND_TOKEN). Verification does not send a notification.",
         "data": {
           "url": "HTTPS URL",
           "token": "API token"
@@ -99,7 +99,7 @@
         "data": {
           "topic": "Topic",
           "title": "Title",
-          "message": "Message"
+          "notification": "Notification"
         }
       },
       "result": {
@@ -121,7 +121,7 @@
     },
     "error": {
       "invalid_url": "Enter an HTTPS origin without credentials, path, query or fragment.",
-      "invalid_auth": "Invalid token. Use an All sending integration token (or SEND_TOKEN).",
+      "invalid_auth": "Invalid token. Use an integration token (or SEND_TOKEN).",
       "no_permission": "This token cannot access topics.",
       "cannot_connect": "Cannot connect to Pushie.",
       "unsupported_api": "Update Pushie: topic API version 1 is required.",
@@ -130,7 +130,7 @@
       "conflict": "Idempotency conflict.",
       "rate_limited": "Rate limited. Try again later.",
       "server_error": "Pushie returned an error.",
-      "invalid_message": "Enter a nonblank message (at most 2000 UTF-8 bytes) and title (at most 160 bytes).",
+      "invalid_notification": "Enter a nonblank notification (at most 262144 UTF-8 bytes) and title (at most 160 bytes).",
       "select_topics": "Select at least one topic.",
       "no_topics": "No topics found. Create topics in Pushie, then retry."
     }

@@ -1,4 +1,4 @@
-"""Small topic-only Pushie client. Never log credentials or message contents."""
+"""Small topic-only Pushie client. Never log credentials or notification contents."""
 
 import asyncio
 from datetime import UTC, datetime
@@ -117,17 +117,21 @@ class PushieClient:
             raise PushieError("unsupported_api")
         return {t["name"]: t.get("description", "") for t in topics}
 
-    async def send(self, topic, message, title=None):
+    async def send(self, topic, notification, title=None):
         title = "Home Assistant" if title is None else title
-        if not message.strip() or len(message.encode()) > 2000 or len(title.encode()) > 160:
-            raise PushieError("invalid_message")
+        if (
+            not notification.strip()
+            or len(notification.encode()) > 256 * 1024
+            or len(title.encode()) > 160
+        ):
+            raise PushieError("invalid_notification")
         return await self.request(
             "POST",
             "/api/send",
             {
                 "topic": topic,
                 "title": title,
-                "body": message,
+                "body": notification,
             },
             key=uuid4().hex,
         )
