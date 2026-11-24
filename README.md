@@ -4,11 +4,23 @@ A custom Home Assistant integration that sends [Pushie](https://github.com/malwi
 
 ## Install
 
-1. Sign in to GitHub with access to this private repository and [download the ZIP](https://github.com/malwikl/pushie-home-assistant/archive/refs/heads/main.zip).
-2. Extract the ZIP and copy the `custom_components/pushie` folder into your Home Assistant configuration directory. The manifest should end up at `config/custom_components/pushie/manifest.json`. Create `custom_components` if needed. [Find your Home Assistant configuration directory](https://www.home-assistant.io/docs/configuration/).
-3. Restart Home Assistant.
+### With HACS
 
-To update, replace the installed `custom_components/pushie` folder with the new copy and restart Home Assistant. Use manual installation while this repository is private. [HACS custom repository guide](https://www.hacs.xyz/docs/faq/custom_repositories/).
+If you already have HACS, use this badge to open Pushie as a custom repository. [Install HACS](https://www.hacs.xyz/docs/use/download/download/).
+
+[![Open Pushie in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=malwikl&repository=pushie-home-assistant&category=integration)
+
+1. If you prefer to add it from HACS, open **HACS → ⋮ → Custom repositories**, enter `https://github.com/malwikl/pushie-home-assistant`, select **Integration**, and choose **Add**. [HACS custom repository guide](https://www.hacs.xyz/docs/faq/custom_repositories/).
+2. Open **Pushie** in HACS and select **Download**.
+3. Restart Home Assistant and [set up Pushie](#set-up-pushie). Use HACS to download updates, then restart Home Assistant to apply them.
+
+### Manual installation
+
+1. [Download the ZIP](https://github.com/malwikl/pushie-home-assistant/archive/refs/heads/main.zip) and extract it.
+2. Copy the `custom_components/pushie` folder into your Home Assistant configuration directory. The manifest should end up at `config/custom_components/pushie/manifest.json`. Create `custom_components` if needed. [Find your Home Assistant configuration directory](https://www.home-assistant.io/docs/configuration/).
+3. Restart Home Assistant and [set up Pushie](#set-up-pushie).
+
+To update a manual installation, replace the installed `custom_components/pushie` folder with the new copy and restart Home Assistant.
 
 ## Set up Pushie
 
