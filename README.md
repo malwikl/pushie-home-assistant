@@ -1,10 +1,32 @@
 # Pushie for Home Assistant
 
-A UI-configured, topic-only notification integration for [Pushie](https://github.com/malwikl/pushie).
+A custom Home Assistant integration that sends [Pushie](https://github.com/malwikl/pushie) notifications from automations and scripts. Each selected Pushie topic becomes a Home Assistant `notify` entity.
 
-Copy `custom_components/pushie` into Home Assistant's `config/custom_components/` directory and restart Home Assistant. Add **Pushie** under Settings → Devices & services. Enter the server's HTTPS origin and an integration token, choose topics, then send an optional real test or skip it. The server must include `GET /api/topics` and `POST /api/verify` (API version 1). Older Pushie versions must be updated first. Create a key under Pushie → Administration → Integration keys. The server `SEND_TOKEN` also works. No administrator token is needed. Personal keys cannot pass topic verification. Integration keys work with both Home Assistant and Watchtower and may send to any destination through the API; the HA integration exposes topics only.
+## Install
 
-Use a selected topic in the visual automation editor with **Notifications: Send a notification message**, or YAML:
+1. Sign in to GitHub with access to this private repository and [download the ZIP](https://github.com/malwikl/pushie-home-assistant/archive/refs/heads/main.zip).
+2. Extract the ZIP and copy the `custom_components/pushie` folder into your Home Assistant configuration directory. The manifest should end up at `config/custom_components/pushie/manifest.json`. Create `custom_components` if needed. [Find your Home Assistant configuration directory](https://www.home-assistant.io/docs/configuration/).
+3. Restart Home Assistant.
+
+To update, replace the installed `custom_components/pushie` folder with the new copy and restart Home Assistant. Use manual installation while this repository is private. [HACS custom repository guide](https://www.hacs.xyz/docs/faq/custom_repositories/).
+
+## Set up Pushie
+
+1. Make sure Home Assistant can reach your Pushie server over HTTPS and that Pushie has at least one topic. The integration requires `GET /api/topics` and `POST /api/verify` (API version 1). [Pushie API documentation](https://github.com/malwikl/pushie/blob/main/docs/README.md#home-assistant-topic-api).
+2. In Pushie, open **Administration → Integration keys**, create a key, and copy the token when it appears. The server `SEND_TOKEN` also works. Personal API keys lack topic access. Integration keys can send to any destination through the Pushie API.
+3. After installing and restarting, use the badge below or go to **Settings → Devices & services → Add integration** and search for **Pushie**.
+4. Enter the Pushie base URL (for example, `https://pushie.example.com`) and the integration token. Home Assistant verifies the connection, then lets you select the topics to use.
+5. Choose **Skip / finish** to save or **Send test notification** to try a topic first. A test sends a real notification to the selected topic's subscribers. Finish setup to create the notify entities.
+
+[![Add Pushie to My Home Assistant](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=pushie)
+
+## Send a notification
+
+Open **Settings → Tools → Actions**, choose **Send a notification message**, select your Pushie topic entity as the target, enter a message and optional title, and select **Perform action**. Use the same action in the automation or script editor. [Home Assistant action reference](https://www.home-assistant.io/actions/notify.send_message/).
+
+[![Open the notification action in My Home Assistant](https://my.home-assistant.io/badges/developer_call_service.svg)](https://my.home-assistant.io/redirect/developer_call_service/?service=notify.send_message)
+
+For YAML, replace `notify.pushie_automation` with the entity ID shown in your instance.
 
 ```yaml
 action: notify.send_message
@@ -15,13 +37,19 @@ data:
   message: The washing machine has finished.
 ```
 
-Entity IDs depend on your installation. Configure offers topic selection, explicit refresh, verification without sending, and real tests. The integration menu also supports URL reconfiguration and token reauthentication. Each test submission sends to all subscribers of exactly one selected topic. Results report inbox/queue counts, not confirmed receipt; zero inboxes means no subscribers, and inboxes with zero queued devices means inbox-only delivery.
+## Manage topics and credentials
+
+Open **Settings → Devices & services → Pushie → Configure** to change topic selections, refresh the topic list, verify the connection without sending, or send another test notification. Use **Reconfigure** in the integration menu to update the URL or token. Home Assistant prompts for reauthentication if Pushie rejects the token.
+
+[![Open Integrations in My Home Assistant](https://my.home-assistant.io/badges/integrations.svg)](https://my.home-assistant.io/redirect/integrations/)
+
+Test results show how many inboxes received the notification and how many devices were queued for push. Zero inboxes means no subscribers. If the notification appears in an inbox with zero devices queued, check whether the topic is muted or whether push is enabled on a device subscribed to the topic.
 
 Topics refresh every five minutes. Removed selected topics remain selected but unavailable; reappearing topics recover their existing identity. New topics require selection. Transient refresh failures retain the catalog. Entity IDs are backed by a persisted installation identity independent of URL and credentials.
 
 Requests use TLS validation, bounded timeouts, no redirects, and up to three attempts for network failures, HTTP 429 and 5xx responses. Each logical send reuses one idempotency key across retries. Retry-After delays above five seconds are surfaced for a later manual retry. Outcomes can remain uncertain after a timeout or Home Assistant restart. Notification content is never silently truncated. Removing the integration does not delete notifications in Pushie.
 
-Home Assistant reference: [notify entities](https://contributors.home-assistant.io/core/entities/notify/) and [configuration flows](https://contributors.home-assistant.io/core/integrations/config-flow/).
+See the Home Assistant developer documentation for [notify entities](https://contributors.home-assistant.io/core/entities/notify/) and [configuration flows](https://contributors.home-assistant.io/core/integrations/config-flow/).
 
 ## Tests
 
