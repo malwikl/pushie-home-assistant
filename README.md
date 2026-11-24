@@ -4,15 +4,17 @@ A custom Home Assistant integration that sends [Pushie](https://github.com/malwi
 
 ## Install
 
-### With HACS
+### With Home Assistant Marketplace
 
-If you already have HACS, use this badge to open Pushie as a custom repository. [Install HACS](https://www.hacs.xyz/docs/use/download/download/).
+Marketplace is built into Home Assistant 2026.11 and later. Use this badge to open Pushie as a custom repository. Connect your GitHub account if Marketplace prompts you. [Marketplace documentation](https://www.home-assistant.io/integrations/marketplace/#custom-repositories).
 
-[![Open Pushie in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=malwikl&repository=pushie-home-assistant&category=integration)
+[![Open Pushie in Home Assistant Marketplace](https://my.home-assistant.io/badges/marketplace_repository.svg)](https://my.home-assistant.io/redirect/marketplace_repository/?owner=malwikl&repository=pushie-home-assistant&category=integration)
 
-1. If you prefer to add it from HACS, open **HACS → ⋮ → Custom repositories**, enter `https://github.com/malwikl/pushie-home-assistant`, select **Integration**, and choose **Add**. [HACS custom repository guide](https://www.hacs.xyz/docs/faq/custom_repositories/).
-2. Open **Pushie** in HACS and select **Download**.
-3. Restart Home Assistant and [set up Pushie](#set-up-pushie). Use HACS to download updates, then restart Home Assistant to apply them.
+1. If you prefer to add it from Home Assistant, open **Settings → Marketplace → Add from link**, enter `https://github.com/malwikl/pushie-home-assistant`, and select **Add**. If prompted for a type, select **Integration**.
+2. Open **Pushie** in Marketplace, select **Install**, and confirm.
+3. Follow the setup prompt or [add Pushie from Settings](#set-up-pushie). If Home Assistant prompts you to restart, restart before setup.
+
+Install updates from **Settings → Updates**, then restart Home Assistant to apply them.
 
 ### Manual installation
 
@@ -26,7 +28,7 @@ To update a manual installation, replace the installed `custom_components/pushie
 
 1. Make sure Home Assistant can reach your Pushie server over HTTPS and that Pushie has at least one topic. The integration requires `GET /api/topics` and `POST /api/verify` (API version 1). [Pushie API documentation](https://github.com/malwikl/pushie/blob/main/docs/README.md#home-assistant-topic-api).
 2. In Pushie, open **Administration → Integration keys**, create a key, and copy the token when it appears. The server `SEND_TOKEN` also works. Personal API keys lack topic access. Integration keys can send to any destination through the Pushie API.
-3. After installing and restarting, use the badge below or go to **Settings → Devices & services → Add integration** and search for **Pushie**.
+3. If setup did not open after installation, use the badge below or go to **Settings → Devices & services → Add integration** and search for **Pushie**.
 4. Enter the Pushie base URL (for example, `https://pushie.example.com`) and the integration token. Home Assistant verifies the connection, then lets you select the topics to use.
 5. Choose **Skip / finish** to save or **Send test notification** to try a topic first. A test sends a real notification to the selected topic's subscribers. Finish setup to create the notify entities.
 
